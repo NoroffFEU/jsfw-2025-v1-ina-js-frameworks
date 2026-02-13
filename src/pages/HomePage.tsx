@@ -37,7 +37,7 @@ function HomePage() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="grid max-[760px]:grid-cols-1 min-[570px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+    <div className="grid max-[760px]:grid-cols-1 min-[570px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 bg-blue-100">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
