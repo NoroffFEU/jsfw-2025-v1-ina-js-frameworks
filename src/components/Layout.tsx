@@ -1,8 +1,11 @@
 import { Outlet, Link } from "@tanstack/react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { useCartStore } from "../store/cartStore";
 
 function Layout() {
+  const totalItems = useCartStore((state) => state.getTotalItems());
+
   return (
     <div className="min-h-screen font-sans">
       <header>
@@ -15,6 +18,7 @@ function Layout() {
             <Link to="/contact">Contact</Link>
             <Link to="/cart">
               <FontAwesomeIcon className="text-[18px]" icon={faCartShopping} />
+              <span>{totalItems}</span>
             </Link>
           </div>
         </nav>

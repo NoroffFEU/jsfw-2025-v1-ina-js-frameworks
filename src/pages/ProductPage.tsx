@@ -3,6 +3,7 @@ import { useParams } from "@tanstack/react-router";
 import type { Product } from "../types/product";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { useCartStore } from "../store/cartStore";
 
 const API_URL = "https://v2.api.noroff.dev/online-shop";
 
@@ -11,6 +12,9 @@ function ProductPage() {
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [quantity, setQuantity] = useState(1);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -70,15 +74,24 @@ function ProductPage() {
             )}
           </div>
           <div>
-            <button className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full ">
+            <button
+              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+              className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full "
+            >
               <FontAwesomeIcon icon={faMinus} />
             </button>
-            <span className="font-medium px-5 text-[18px]">1</span>
-            <button className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full ">
+            <span className="font-medium px-5 text-[18px]">{quantity}</span>
+            <button
+              onClick={() => setQuantity((q) => q + 1)}
+              className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full "
+            >
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
-          <button className="font-bold px-5 py-2 mt-3 rounded-full transition-colors duration-200 bg-blue-700 text-blue-50">
+          <button
+            onClick={() => addToCart(product, quantity)}
+            className="font-bold px-5 py-2 mt-3 rounded-full transition-colors duration-200 bg-blue-700 text-blue-50"
+          >
             Add to cart
           </button>
         </div>
