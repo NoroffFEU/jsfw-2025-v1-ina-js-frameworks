@@ -2,6 +2,7 @@ import { RootRoute, Route, Router } from "@tanstack/react-router";
 import HomePage from "../pages/HomePage";
 import ProductPage from "../pages/ProductPage";
 import CartPage from "../pages/CartPage";
+import ConfirmationPage from "../pages/ConfirmationPage";
 import Layout from "../components/Layout";
 
 export const rootRoute = new RootRoute({
@@ -26,10 +27,17 @@ export const cartRoute = new Route({
   component: CartPage,
 });
 
+export const confirmationRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/confirmation",
+  component: ConfirmationPage,
+});
+
 export const routeTree = rootRoute.addChildren([
   homeRoute,
   productRoute,
   cartRoute,
+  confirmationRoute,
 ]);
 
 export const router = new Router({ routeTree });

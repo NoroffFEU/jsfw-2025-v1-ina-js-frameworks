@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Link } from "@tanstack/react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faMinus,
+  faTrash,
+  faFaceFrown,
+} from "@fortawesome/free-solid-svg-icons";
 import { useCartStore } from "../store/cartStore";
 
 function CartPage() {
@@ -12,7 +18,7 @@ function CartPage() {
   const totalPrice = useCartStore((state) => state.getTotalPrice);
 
   return (
-    <div className="flex min-h-screen gap-5">
+    <div className="flex min-h-screen">
       <div className="flex-1 px-6 py-8">
         <div className="flex justify-between font-bold text-[24px] text-blue-800">
           <h1>Shopping Cart</h1>
@@ -22,7 +28,18 @@ function CartPage() {
         <hr className="h-[2px] bg-blue-300 mt-4 mb-5" />
 
         <div className="flex flex-col gap-7">
-          {items.length === 0 && <p>Your cart is empty.</p>}
+          {items.length === 0 && (
+            <div className="flex flex-col items-center text-blue-800 mt-10">
+              <FontAwesomeIcon icon={faFaceFrown} size="8x" />
+              <p className="text-[32px] my-5 font-bold">Your cart is empty.</p>
+              <Link
+                to={"/"}
+                className="bg-blue-700 text-[18px] text-white font-semibold  py-3 px-7"
+              >
+                Start shopping
+              </Link>
+            </div>
+          )}
 
           {items.map((item) => {
             const price =
@@ -88,7 +105,7 @@ function CartPage() {
           <h1 className="font-bold text-[24px] text-blue-800">Order Summary</h1>
           <hr className="h-[2px] bg-blue-500 mt-4 mb-5" />
           <span className="font-medium text-[18px]">
-            ITEMS {totalItems().toFixed(0)}
+            {totalItems().toFixed(0)} ITEMS
           </span>
 
           <div className="flex flex-col gap-5 mt-5">
@@ -113,9 +130,12 @@ function CartPage() {
             <span>TOTAL COST</span>
             <span>${totalPrice().toFixed(2)}</span>
           </div>
-          <button className="bg-blue-700 text-white font-semibold w-full py-3 mt-7">
+          <Link
+            to={"/confirmation"}
+            className="flex justify-center bg-blue-700 text-white font-semibold py-3 mt-7"
+          >
             CHECKOUT
-          </button>
+          </Link>
         </div>
       )}
     </div>

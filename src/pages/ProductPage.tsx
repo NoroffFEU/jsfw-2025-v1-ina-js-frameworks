@@ -31,12 +31,12 @@ function ProductPage() {
   if (!product) return <p>Product not found</p>;
 
   return (
-    <div className="pt-6 font-sans min-h-screen bg-blue-50">
+    <div className="py-16 font-sans min-h-screen bg-blue-50">
       <div className="max-w-325 mx-auto flex justify-center items-center max-[800px]:flex-col gap-10 px-7">
         <img
           src={product.image.url}
           alt={product.image.alt}
-          className="w-[450px] h-[450px] object-cover rounded-[20px]"
+          className="w-[450px] aspect-square object-cover rounded-[20px]"
         />
         <div className="max-w-[380px]">
           <div className="flex gap-3">
