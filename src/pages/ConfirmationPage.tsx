@@ -12,7 +12,7 @@ function ConfirmationPage() {
   }, [clearCart]);
 
   return (
-    <div className="flex flex-col items-center justify-center text-blue-800 gap-5 mt-20 mx-6">
+    <div className="flex flex-col items-center justify-center text-blue-800 gap-5 mt-20">
       <FontAwesomeIcon icon={faCircleCheck} size="8x" />
       <div className="text-center">
         <p className="text-[32px] font-bold">Payment successful!</p>

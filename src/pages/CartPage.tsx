@@ -18,8 +18,8 @@ function CartPage() {
   const totalPrice = useCartStore((state) => state.getTotalPrice);
 
   return (
-    <div className="flex min-h-screen">
-      <div className="flex-1 px-6 py-8">
+    <div className="flex max-[840px]:flex-col  min-h-screen">
+      <div className="flex-1 px-6 py-16">
         <div className="flex justify-between font-bold text-[24px] text-blue-800">
           <h1>Shopping Cart</h1>
           <span>{totalItems().toFixed(0)} Items</span>
@@ -53,11 +53,11 @@ function CartPage() {
                 <img
                   src={item.product.image.url}
                   alt={item.product.image.alt}
-                  className="w-32 h-32 object-cover rounded shrink-0"
+                  className="w-32 h-32 max-[450px]:w-28 max-[450px]:h-28 object-cover rounded shrink-0"
                 />
-                <div className="flex h-[100px] ml-10 w-full justify-between">
+                <div className="flex h-[100px] ml-10 max-[450px]:ml-5 w-full justify-between">
                   <div className="flex flex-col justify-between">
-                    <p className="font-semibold text-[18px]">
+                    <p className="font-semibold text-[18px] max-[450px]:text-[16px]">
                       {item.product.title}
                     </p>
                     <div>
@@ -101,10 +101,10 @@ function CartPage() {
         </div>
       </div>
       {items.length > 0 && (
-        <div className="px-6 py-8 bg-blue-100 w-[380px]">
+        <div className="px-6 py-16 bg-blue-100 w-[380px] max-[840px]:w-full">
           <h1 className="font-bold text-[24px] text-blue-800">Order Summary</h1>
           <hr className="h-[2px] bg-blue-500 mt-4 mb-5" />
-          <span className="font-medium text-[18px]">
+          <span className="font-semibold text-[18px] text-blue-800">
             {totalItems().toFixed(0)} ITEMS
           </span>
 

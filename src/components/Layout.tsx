@@ -9,7 +9,7 @@ function Layout() {
   return (
     <div className="min-h-screen font-sans">
       <header className="sticky top-0 z-10">
-        <nav className="flex justify-between items-center px-6 py-4 bg-white text-blue-800 font-medium">
+        <nav className="flex justify-between items-center px-6 py-4 bg-blue-100 text-blue-800 font-medium">
           <Link to="/" className="">
             Shop
           </Link>

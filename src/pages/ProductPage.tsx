@@ -31,7 +31,7 @@ function ProductPage() {
   if (!product) return <p>Product not found</p>;
 
   return (
-    <div className="py-16 font-sans min-h-screen bg-blue-50">
+    <div className="py-[100px] font-sans min-h-screen bg-blue-50">
       <div className="max-w-325 mx-auto flex justify-center items-center max-[800px]:flex-col gap-10 px-7">
         <img
           src={product.image.url}
