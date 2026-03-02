@@ -73,7 +73,7 @@ function HomePage() {
     <div className="grow relative">
       <div className="w-full bg-gradient-to-b from-blue-100 to-white absolute h-[850px]">
         <div className="flex flex-col items-center max-w-[800px] mx-auto px-6">
-          <h1 className="text-[48px] text-blue-800 font-bold text-center mt-[80px] mb-6">
+          <h1 className="text-[48px] max-[480px]:text-[40px] text-blue-800 font-bold text-center mt-[80px] mb-6">
             Search or Sort for product
           </h1>
           <form className="flex max-[480px]:flex-col gap-4 w-full">

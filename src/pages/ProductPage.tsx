@@ -38,7 +38,7 @@ function ProductPage() {
           alt={product.image.alt}
           className="w-[450px] aspect-square object-cover rounded-[20px]"
         />
-        <div className="max-w-[380px]">
+        <div className="w-full max-w-[380px] max-[800px]:max-w-[450px]">
           <div className="flex gap-3">
             {product.tags?.map((tag) => (
               <span
@@ -94,6 +94,24 @@ function ProductPage() {
           >
             Add to cart
           </button>
+        </div>
+      </div>
+      <div className="flex flex-col items-center mt-10 max-[800px]:mt-20 px-6">
+        <div className="w-full max-w-[850px] max-[800px]:max-w-[450px] space-y-5">
+          <h2 className="text-[32px] font-black ">Reviews</h2>
+          {product.reviews?.length === 0 && (
+            <p className="text-[18px]">No reviews yet...</p>
+          )}
+
+          {product.reviews?.map((review) => (
+            <div>
+              <span className="text-[18px] font-bold">{review.username}</span>
+              <p className="text-[18px] font-bold text-blue-800 mb-2">
+                Rating: {review.rating}/5
+              </p>
+              <p>{review.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
