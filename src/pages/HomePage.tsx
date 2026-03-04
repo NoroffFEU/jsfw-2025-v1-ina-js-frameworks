@@ -13,7 +13,7 @@ function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("default");
 
-  const getPrice = (product) => {
+  const getPrice = (product: Product): number => {
     if (product.discountedPrice && product.discountedPrice < product.price) {
       return product.discountedPrice;
     }
