@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { Product } from "../types/product";
+import type { Product } from "../types/Product";
 import ProductCard from "../components/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";

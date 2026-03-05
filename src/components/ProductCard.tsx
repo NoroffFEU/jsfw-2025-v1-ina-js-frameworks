@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
-import type { Product } from "../types/product";
+import type { Product } from "../types/Product";
 
 interface ProductCardProps {
   product: Product;
