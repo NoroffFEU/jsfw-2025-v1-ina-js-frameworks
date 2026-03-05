@@ -49,7 +49,6 @@ function HomePage() {
         if (!res.ok) throw new Error("Failed to fetch products");
 
         const response: { data: Product[]; meta: any } = await res.json();
-        console.log("API response:", response);
 
         setProducts(response.data);
       } catch (err) {
