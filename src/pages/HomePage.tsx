@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Product } from "../types/Product";
 import ProductCard from "../components/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

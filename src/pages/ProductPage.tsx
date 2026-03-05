@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "@tanstack/react-router";
-import type { Product } from "../types/product";
+import type { Product, Review } from "../types/Product";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useCartStore } from "../store/cartStore";
@@ -40,7 +40,7 @@ function ProductPage() {
         />
         <div className="w-full max-w-[380px] max-[800px]:max-w-[450px]">
           <div className="flex gap-3">
-            {product.tags?.map((tag) => (
+            {product.tags?.map((tag: string) => (
               <span
                 key={tag}
                 className="bg-blue-200 text-blue-800 font-medium text-[14px] px-3 py-0.5 rounded-full"
@@ -103,7 +103,7 @@ function ProductPage() {
             <p className="text-[18px]">No reviews yet...</p>
           )}
 
-          {product.reviews?.map((review) => (
+          {product.reviews?.map((review: Review) => (
             <div>
               <span className="text-[18px] font-bold">{review.username}</span>
               <p className="text-[18px] font-bold text-blue-800 mb-2">
