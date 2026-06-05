@@ -8,8 +8,8 @@ function Layout() {
 
   return (
     <div className="min-h-screen font-sans">
-      <header className="sticky top-0 z-10">
-        <nav className="flex justify-between items-center px-6 py-4 bg-blue-100 text-blue-800 font-medium">
+      <header className="flex justify-center sticky top-0 z-10 bg-blue-100 text-blue-800 font-medium">
+        <nav className="flex justify-between items-center px-4 md:px-10 py-4 max-w-[1600px] w-full">
           <Link to="/" className="">
             Shop
           </Link>
@@ -24,7 +24,7 @@ function Layout() {
         </nav>
       </header>
 
-      <main>
+      <main className="-mt-[56px]">
         <Outlet />
       </main>
     </div>

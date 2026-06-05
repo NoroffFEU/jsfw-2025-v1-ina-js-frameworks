@@ -45,7 +45,22 @@ function ProductPage() {
   }, [productId]);
 
   if (loading) return <PageLoader />;
-  if (!product) return <p>Product not found</p>;
+
+  if (error) {
+    return (
+      <div className="grow min-h-dvh flex items-center justify-center bg-blue-50 text-blue-700 font-bold">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="grow min-h-dvh flex items-center justify-center bg-blue-50 text-blue-700 font-bold">
+        Product not found
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col justify-center items-center py-[100px] font-sans min-h-screen bg-blue-50">

@@ -77,7 +77,7 @@ function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-blue-100 to-white">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-blue-100 to-white">
       <div className="w-full max-w-[600px] bg-white my-10 p-8 rounded-xl shadow-lg">
         {submitted ? (
           <div className="flex flex-col items-center justify-center text-blue-800 gap-5">
