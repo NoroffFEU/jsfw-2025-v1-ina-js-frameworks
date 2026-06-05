@@ -3,6 +3,9 @@ import type { Product } from "../types/Product";
 import ProductCard from "../components/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import ProductCardSkeleton from "../components/ProductCardSkeleton";
+
+const skeletonCards = Array.from({ length: 8 });
 
 const API_URL = "https://v2.api.noroff.dev/online-shop";
 
@@ -65,7 +68,6 @@ function HomePage() {
     fetchProducts();
   }, []);
 
-  if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -107,9 +109,11 @@ function HomePage() {
         </div>
       </div>
       <div className="grid max-[760px]:grid-cols-1 min-[570px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 pt-[450px] bg-white">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {loading
+          ? skeletonCards.map((_, index) => <ProductCardSkeleton key={index} />)
+          : filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
       </div>
     </div>
   );

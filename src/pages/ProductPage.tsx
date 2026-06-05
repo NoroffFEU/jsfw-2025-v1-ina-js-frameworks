@@ -4,6 +4,7 @@ import type { Product, Review } from "../types/Product";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useCartStore } from "../store/cartStore";
+import PageLoader from "../components/PageLoader";
 
 const API_URL = "https://v2.api.noroff.dev/online-shop";
 
@@ -16,102 +17,122 @@ function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const addToCart = useCartStore((state) => state.addToCart);
 
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await fetch(`${API_URL}/${productId}`);
-      const response = await res.json();
-      setProduct(response.data);
-      setLoading(false);
+      try {
+        const res = await fetch(`${API_URL}/${productId}`);
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch product");
+        }
+
+        const response = await res.json();
+        setProduct(response.data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Something went wrong");
+        }
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchProduct();
   }, [productId]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <PageLoader />;
   if (!product) return <p>Product not found</p>;
 
   return (
-    <div className="py-[100px] font-sans min-h-screen bg-blue-50">
-      <div className="max-w-325 mx-auto flex justify-center items-center max-[800px]:flex-col gap-10 px-7">
-        <img
-          src={product.image.url}
-          alt={product.image.alt}
-          className="w-[450px] aspect-square object-cover rounded-[20px]"
-        />
-        <div className="w-full max-w-[380px] max-[800px]:max-w-[450px]">
-          <div className="flex gap-3">
-            {product.tags?.map((tag: string) => (
-              <span
-                key={tag}
-                className="bg-blue-200 text-blue-800 font-medium text-[14px] px-3 py-0.5 rounded-full"
-              >
-                {tag}
+    <div className="flex flex-col justify-center items-center py-[100px] font-sans min-h-screen bg-blue-50">
+      <div>
+        <div className="max-w-325 mx-auto flex justify-center items-center max-[800px]:flex-col gap-10 px-7">
+          <img
+            src={product.image.url}
+            alt={product.image.alt}
+            className="lg:w-[600px] w-[450px] aspect-square object-cover rounded-[20px]"
+          />
+          <div className="w-full max-w-[380px] max-[800px]:max-w-[450px]">
+            <div className="flex gap-3">
+              {product.tags?.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="bg-blue-200 text-blue-800 font-medium text-[14px] px-3 py-0.5 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h1 className="font-black text-[40px]">{product.title}</h1>
+            <p className="text-[18px] mb-2">
+              Rating:{" "}
+              <span className="font-bold text-blue-700">
+                {product.rating}/5
               </span>
-            ))}
-          </div>
-          <h1 className="font-black text-[40px]">{product.title}</h1>
-          <p className="text-[18px] mb-2">
-            Rating:{" "}
-            <span className="font-bold text-blue-700">{product.rating}/5</span>
-          </p>
-          <p>{product.description}</p>
-          <div className="flex items-center text-[20px] gap-2 mt-4 mb-6">
-            {product &&
-            product.discountedPrice !== undefined &&
-            product.discountedPrice < product.price ? (
-              <>
-                <span className="line-through text-gray-500">
+            </p>
+            <p>{product.description}</p>
+            <div className="flex items-center text-[20px] gap-2 mt-4 mb-6">
+              {product &&
+              product.discountedPrice !== undefined &&
+              product.discountedPrice < product.price ? (
+                <>
+                  <span className="line-through text-gray-500">
+                    ${product.price.toFixed(2)}
+                  </span>
+                  <span className="text-blue-700 font-medium">
+                    ${product.discountedPrice!.toFixed(2)}
+                  </span>
+                </>
+              ) : (
+                <span className="text-gray-900 font-medium">
                   ${product.price.toFixed(2)}
                 </span>
-                <span className="text-blue-700 font-medium">
-                  ${product.discountedPrice!.toFixed(2)}
-                </span>
-              </>
-            ) : (
-              <span className="text-gray-900 font-medium">
-                ${product.price.toFixed(2)}
-              </span>
-            )}
-          </div>
-          <div>
-            <button
-              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full "
-            >
-              <FontAwesomeIcon icon={faMinus} />
-            </button>
-            <span className="font-medium px-5 text-[18px]">{quantity}</span>
-            <button
-              onClick={() => setQuantity((q) => q + 1)}
-              className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full "
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </div>
-          <button
-            onClick={() => addToCart(product, quantity)}
-            className="font-bold px-5 py-2 mt-3 rounded-full transition-colors duration-200 bg-blue-700 text-blue-50"
-          >
-            Add to cart
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col items-center mt-10 max-[800px]:mt-20 px-6">
-        <div className="w-full max-w-[850px] max-[800px]:max-w-[450px] space-y-5">
-          <h2 className="text-[32px] font-black ">Reviews</h2>
-          {product.reviews?.length === 0 && (
-            <p className="text-[18px]">No reviews yet...</p>
-          )}
-
-          {product.reviews?.map((review: Review) => (
-            <div>
-              <span className="text-[18px] font-bold">{review.username}</span>
-              <p className="text-[18px] font-bold text-blue-800 mb-2">
-                Rating: {review.rating}/5
-              </p>
-              <p>{review.description}</p>
+              )}
             </div>
-          ))}
+            <div>
+              <button
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full "
+              >
+                <FontAwesomeIcon icon={faMinus} />
+              </button>
+              <span className="font-medium px-5 text-[18px]">{quantity}</span>
+              <button
+                onClick={() => setQuantity((q) => q + 1)}
+                className="bg-blue-100 text-blue-700 px-3 py-2.5 rounded-full "
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+            <button
+              onClick={() => addToCart(product, quantity)}
+              className="font-bold px-5 py-2 mt-3 rounded-full transition-colors duration-200 bg-blue-700 text-blue-50"
+            >
+              Add to cart
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col items-center mt-10 max-[800px]:mt-20 px-6">
+          <div className="w-full lg:max-w-[1076px] max-w-[850px] max-[800px]:max-w-[450px] space-y-5">
+            <h2 className="text-[32px] font-black ">Reviews</h2>
+            {product.reviews?.length === 0 && (
+              <p className="text-[18px]">No reviews yet...</p>
+            )}
+
+            {product.reviews?.map((review: Review) => (
+              <div>
+                <span className="text-[18px] font-bold">{review.username}</span>
+                <p className="text-[18px] font-bold text-blue-800 mb-2">
+                  Rating: {review.rating}/5
+                </p>
+                <p>{review.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
