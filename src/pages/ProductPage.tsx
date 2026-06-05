@@ -17,6 +17,7 @@ function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const addToCart = useCartStore((state) => state.addToCart);
 
+  const [showCartNotification, setShowCartNotification] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -44,6 +45,18 @@ function ProductPage() {
     fetchProduct();
   }, [productId]);
 
+  function handleAddToCart() {
+    if (!product) return;
+
+    addToCart(product, quantity);
+
+    setShowCartNotification(true);
+
+    setTimeout(() => {
+      setShowCartNotification(false);
+    }, 2000);
+  }
+
   if (loading) return <PageLoader />;
 
   if (error) {
@@ -65,7 +78,19 @@ function ProductPage() {
   return (
     <div className="flex flex-col justify-center items-center py-[100px] font-sans min-h-screen bg-blue-50">
       <div>
-        <div className="max-w-325 mx-auto flex justify-center items-center max-[800px]:flex-col gap-10 px-7">
+        {showCartNotification && (
+          <div className="fixed top-16 left-0 right-0 z-50 pointer-events-none">
+            <div className="w-full max-w-[1600px] mx-auto px-4 md:px-10 flex justify-end">
+              <div className="rounded-xl bg-blue-700 px-5 py-4 text-blue-50 shadow-lg animate-[cartPop_0.25s_ease-out] pointer-events-auto">
+                <p className="font-bold">Added to cart</p>
+                <p className="text-sm">
+                  {quantity} × {product.title}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="max-w-325 mx-auto flex justify-center items-center max-[800px]:flex-col gap-10">
           <img
             src={product.image.url}
             alt={product.image.alt}
@@ -124,14 +149,14 @@ function ProductPage() {
               </button>
             </div>
             <button
-              onClick={() => addToCart(product, quantity)}
+              onClick={handleAddToCart}
               className="font-bold px-5 py-2 mt-3 rounded-full transition-colors duration-200 bg-blue-700 text-blue-50"
             >
               Add to cart
             </button>
           </div>
         </div>
-        <div className="flex flex-col items-center mt-10 max-[800px]:mt-20 px-6">
+        <div className="flex flex-col items-center mt-10 max-[800px]:mt-20">
           <div className="w-full lg:max-w-[1076px] max-w-[850px] max-[800px]:max-w-[450px] space-y-5">
             <h2 className="text-[32px] font-black ">Reviews</h2>
             {product.reviews?.length === 0 && (

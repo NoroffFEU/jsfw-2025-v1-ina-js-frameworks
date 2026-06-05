@@ -109,7 +109,7 @@ function HomePage() {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="grid max-[760px]:grid-cols-1 min-[570px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 md:px-10 pt-[600px] mb-10 bg-white max-w-[1600px]">
+        <div className="grid max-[760px]:grid-cols-1 min-[570px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 md:px-10 pt-[600px] mb-10 bg-white max-w-[1600px] w-full">
           {loading
             ? skeletonCards.map((_, index) => (
                 <ProductCardSkeleton key={index} />
